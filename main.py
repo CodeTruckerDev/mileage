@@ -49,8 +49,8 @@ class MileageDB:
         return [row[0] for row in self.cursor.fetchall()]
     
 class MileageLayout(BoxLayout):
-    Config.set('graphics', 'width', '360')
-    Config.set('graphics', 'height', '800')
+    Config.set('graphics', 'width', '360')   # set for Samsung M51
+    Config.set('graphics', 'height', '800')  # or others with same config
     current_month = StringProperty()
     start = StringProperty("")
     end = StringProperty("")
@@ -163,10 +163,6 @@ class MileageLayout(BoxLayout):
                 self.total = db_mileage + self.total_daily
             else:
                 self.warning_text = "Wartość końcowa  >  wartość początkowa"
-
-##    def increment_d(self, text=None):
-##        self.d_counter_daily += 1
-##        self.was_delegation_text = f"Delegacji: + (self.d_counter_daily)"
 
     def toggle_delegation(self):
         if self.was_delegation_text == "Brak delegacji":
