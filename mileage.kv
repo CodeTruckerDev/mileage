@@ -1,0 +1,133 @@
+<MileageLayout>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 10
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: '60dp'
+        spacing: 10
+
+        Button:
+            # text: root.current_month
+            text: "📅 Wybierz miesiąc"
+            font_size: '20sp'
+            # size_hint_y: None
+            background_color: (1, 1, 0, 1)
+            # height: '40dp'
+            on_press: root.show_month_selector()
+
+        Label:
+            text: root.selected_month_display
+            font_size: '16sp'
+            color: (1, 1, 0, 1)
+
+    Label:
+        text: "Początek trasy"
+        font_size: '16sp'
+        size_hint_y: None
+        height: self.texture_size[1] + 10
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: '50dp'
+        spacing: 10
+
+        TextInput:
+            id: start_input
+            text: root.start
+            input_filter: 'int'
+            input_type: 'number'
+            hint_text: "Przebieg auta przy rozpoczęciu trasy"
+            hint_text_color: 1, 1, 1, 1  # Red color
+            background_color: (0, 1, 0, 1) if self.focus else (0, 0, 1, 1)
+            multiline: True
+            disabled: root.start_locked
+            on_text: root.update_start(self.text)
+
+        Button:
+            id: lock_button
+            text: "✏️" if root.start_locked else "✅"
+            # size_hint_x: None
+            width: '50dp'
+            on_press: root.unlock_start() if root.start_locked else root.lock_start()
+
+    Label:
+        text: "Koniec trasy"
+        font_size: '16sp'
+        size_hint_y: None
+        height: self.texture_size[1] + 10
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: '50dp'
+        spacing: 10
+
+        TextInput:
+            id: end_input
+            text: root.end
+            input_filter: 'int'
+            input_type: 'number'
+            hint_text: "Przebieg auta po zakończeniu trasy"
+            hint_text_color: 1, 1, 1, 1  # Red color
+            background_color: (1, 0, 0, 1) if self.focus else (0, 0, 1, 1)
+            multiline: True
+            disabled: root.end_locked
+            on_text: root.update_end(self.text)
+
+        Button:
+            text: "✏️" if root.end_locked else "✅"
+            # size_hint_x: None
+            width: '50dp'
+            on_press: root.unlock_end() if root.end_locked else root.lock_end()
+
+    Label:
+        text: root.warning_text
+        color: (1, 0, 0, 1)  # Red text
+        font_size: '14sp'
+        size_hint_y: None
+        height: '30dp'
+        # height: self.texture_size[1] + 5
+
+    BoxLayout:
+        size_hint_y: None
+        height: '40dp'
+        spacing: 10
+
+        Label:
+            text: root.was_delegation_text
+            font_size: '18sp'
+
+        Button:
+            id: d_button
+            text: "Była delegacja?"
+            font_size: '18sp'
+            width: '120dp'
+            on_press: root.toggle_delegation()
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '12dp'
+        spacing: '8dp'
+
+        Label:
+            text: "Obecna trasa: " + str(root.total_daily) + " km  -  Delegacji: " + str(root.d_counter_daily)
+            size_hint_y: None
+            font_size: '18sp'
+
+        Label:
+            text: "Razem: " + str(root.total) + " km  -  Delegacji: " + str(root.d_counter)
+            size_hint_y: None
+            font_size: '18sp'
+
+        Button:
+            id: confirm_button
+            size_hint_y: None
+            text: "Zapisz"
+            height: '40dp'
+            # spacing: 130
+            on_press: root.save()
+            disabled: root.save_button
