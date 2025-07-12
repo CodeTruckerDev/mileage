@@ -1,4 +1,7 @@
+# mileage.kv
+
 <MileageLayout>:
+
     orientation: 'vertical'
     padding: 20
     spacing: 10
@@ -9,20 +12,20 @@
         height: '60dp'
         spacing: 10
 
+        # Przycisk wybierający miesiąc
         Button:
-            # text: root.current_month
-            text: "📅 Wybierz miesiąc"
+            text: "📅 Wybrany miesiąc"
             font_size: '20sp'
-            # size_hint_y: None
-            background_color: (1, 1, 0, 1)
-            # height: '40dp'
+            background_color: (1, 1, 0, 1)  # kolor żółty
             on_press: root.show_month_selector()
 
+        # Wyświetla aktualnie wybrany miesiąc (np. "Maj 2025")
         Label:
             text: root.selected_month_display
             font_size: '16sp'
-            color: (1, 1, 0, 1)
+            color: (1, 1, 0, 1)  # kolor żółty
 
+    # Informacja określająca początek trasy
     Label:
         text: "Początek trasy"
         font_size: '16sp'
@@ -35,25 +38,26 @@
         height: '50dp'
         spacing: 10
 
+        # Pole do wpisania przebiegu początkowego
         TextInput:
             id: start_input
             text: root.start
             input_filter: 'int'
             input_type: 'number'
             hint_text: "Przebieg auta przy rozpoczęciu trasy"
-            hint_text_color: 1, 1, 1, 1  # Red color
-            background_color: (0, 1, 0, 1) if self.focus else (0, 0, 1, 1)
-            multiline: True
+            hint_text_color: 1, 1, 1, 1  # kolor biały
+            background_color: (0, 1, 0, 1) if self.focus else (0, 0, 1, 1)  # kolor zielony jako aktywny i niebieski jako nieaktywny
             disabled: root.start_locked
             on_text: root.update_start(self.text)
 
+        # Przycisk blokujący/odblokujący pole do wpisania przebiegu początkowego
         Button:
             id: lock_button
             text: "✏️" if root.start_locked else "✅"
-            # size_hint_x: None
             width: '50dp'
             on_press: root.unlock_start() if root.start_locked else root.lock_start()
 
+    # Informacja określająca koniec trasy
     Label:
         text: "Koniec trasy"
         font_size: '16sp'
@@ -66,68 +70,87 @@
         height: '50dp'
         spacing: 10
 
+        # Pole do wpisania przebiegu końcowego
         TextInput:
             id: end_input
             text: root.end
             input_filter: 'int'
             input_type: 'number'
             hint_text: "Przebieg auta po zakończeniu trasy"
-            hint_text_color: 1, 1, 1, 1  # Red color
-            background_color: (1, 0, 0, 1) if self.focus else (0, 0, 1, 1)
-            multiline: True
+            hint_text_color: 1, 1, 1, 1  # kolor biały
+            background_color: (1, 0, 0, 1) if self.focus else (0, 0, 1, 1)  # kolor czerwony jako aktywny i niebieski jako nieaktywny
             disabled: root.end_locked
             on_text: root.update_end(self.text)
 
+        # Przycisk blokujący/odblokujący pole do wpisania przebiegu końcowego
         Button:
             text: "✏️" if root.end_locked else "✅"
-            # size_hint_x: None
             width: '50dp'
             on_press: root.unlock_end() if root.end_locked else root.lock_end()
 
+
+    # Pole wyświetlające ostrzeżenie w przypadku, gdy wartość końcowa jest mniejsza niż początkowa
     Label:
+        bold: True
         text: root.warning_text
-        color: (1, 0, 0, 1)  # Red text
+        color: (1, 0, 0, 1)  # ostrzeżenie w kolorze czerwonym
         font_size: '14sp'
         size_hint_y: None
         height: '30dp'
-        # height: self.texture_size[1] + 5
+
+    # Informacja określająca ilość delegacji
+    Label:
+        text: "Ilość delegacji"
+        font_size: '16sp'
+        size_hint_y: None
+        height: self.texture_size[1] + 10
 
     BoxLayout:
+        orientation: 'horizontal'
         size_hint_y: None
-        height: '40dp'
+        height: '30dp'
         spacing: 10
 
-        Label:
-            text: root.was_delegation_text
-            font_size: '18sp'
+        # Pole do wpisania ilości delegacji
+        TextInput:
+            id: deleg_input
+            text: "" if root.deleg == 0 else str(root.deleg)
+            input_filter: 'int'
+            input_type: 'number'
+            hint_text: "Ilość delegacji"
+            hint_text_color: 1, 1, 1, 1  # kolor biały
+            background_color: (1, 0.5, 0, 1) if self.focus else (0, 0, 1, 1)  # kolor pomarańczowy jako aktywny i niebieski jako nieaktywny
 
+            disabled: root.deleg_locked
+            on_text: root.update_deleg(self.text)
+
+        # Przycisk blokujący/odblokujący pole do wpisania ilości delegacji
         Button:
-            id: d_button
-            text: "Była delegacja?"
-            font_size: '18sp'
-            width: '120dp'
-            on_press: root.toggle_delegation()
+            text: "✏️" if root.deleg_locked else "✅"
+            width: '50dp'
+            on_press: root.unlock_deleg() if root.deleg_locked else root.lock_deleg()
 
     BoxLayout:
         orientation: 'vertical'
         padding: '12dp'
         spacing: '8dp'
 
+        # Pole opisujące przebieg wprowadzanej trasy
         Label:
-            text: "Obecna trasa: " + str(root.total_daily) + " km  -  Delegacji: " + str(root.d_counter_daily)
+            text: "Obecna trasa: " + str(root.total_daily) + " km  -  Delegacji: " + str(root.deleg)
             size_hint_y: None
             font_size: '18sp'
 
+        # Pole opisujące przebieg sumaryczny dla całego miesiąca
         Label:
             text: "Razem: " + str(root.total) + " km  -  Delegacji: " + str(root.d_counter)
             size_hint_y: None
             font_size: '18sp'
 
+        # Przycisk zapisujący dane do bazy oraz zamykający aplikację po pięciu sekundach
         Button:
             id: confirm_button
             size_hint_y: None
-            text: "Zapisz"
+            text: "Zapisz i wyjdź"
             height: '40dp'
-            # spacing: 130
             on_press: root.save()
-            disabled: root.save_button
