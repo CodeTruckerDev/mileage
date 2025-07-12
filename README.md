@@ -16,7 +16,7 @@
 
 *Widok główny aplikacji – z wprowadzonymi danymi przykładowymi*
 
-![Image](https://github.com/user-attachments/assets/d63de115-8a47-4fd7-b4ff-41c5066a8f6b)
+![Image](mileage_1.0.png)
 
 ## 🗂️ Struktura danych
 
