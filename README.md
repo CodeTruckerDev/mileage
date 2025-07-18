@@ -1,6 +1,6 @@
 # 📱 Mileage – Rejestr przebiegu i delegacji
 
-**Mileage** to minimalistyczna aplikacja do zapisywania przebiegu samochodu oraz delegacji służbowych w ujęciu miesięcznym. Idealna do użytku prywatnego, bez potrzeby logowania ani połączenia z internetem.
+**Mileage** to minimalistyczna aplikacja do zapisywania pokonanych kilometrów tras oraz delegacji służbowych w ujęciu miesięcznym. Idealna do użytku prywatnego, bez potrzeby logowania ani połączenia z internetem.
 
 ## 🧭 Funkcje
 
@@ -28,7 +28,13 @@
 
 ## 🛠️ Instalacja
 
-Skopiuj pliki `main.py`, `mileage.kv`, `dusk2_cropped.jpg`, oraz `icon.png` do katalogu głównego `Pydroid3`.
+Skopiuj pliki `main.py`, `mileage.kv`, `dusk2_cropped.jpg`.
+
+Uruchom przez:
+```
+python main.py
+```
+
 
 ## 📥 Pobierz aplikację
 
