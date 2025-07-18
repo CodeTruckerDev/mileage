@@ -38,7 +38,7 @@ python main.py
 
 ## 📥 Pobierz aplikację
 
-[📦 mileage-v1.0.apk](apk/mileage-v1.0.apk)
+[📦 mileage-v1.0.apk](https://github.com/CodeTruckerDev/mileage/releases/download/v1.0/mileage-1.0-arm64-v8a-debug.apk)
 
 > Plik APK możesz zainstalować bezpośrednio na telefonie (pamiętaj o włączeniu instalacji z nieznanych źródeł).
 
