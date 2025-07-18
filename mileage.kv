@@ -14,7 +14,7 @@
 
         # Przycisk wybierający miesiąc
         Button:
-            text: "📅 Wybrany miesiąc"
+            text: "Wybrany miesiąc"
             font_size: '20sp'
             background_color: (1, 1, 0, 1)  # kolor żółty
             on_press: root.show_month_selector()
@@ -35,7 +35,7 @@
     BoxLayout:
         orientation: 'horizontal'
         size_hint_y: None
-        height: '50dp'
+        height: '30dp'
         spacing: 10
 
         # Pole do wpisania przebiegu początkowego
@@ -52,8 +52,8 @@
 
         # Przycisk blokujący/odblokujący pole do wpisania przebiegu początkowego
         Button:
-            id: lock_button
-            text: "✏️" if root.start_locked else "✅"
+            id: start_button
+            text: "Zmień" if root.start_locked else "Zapisz"
             width: '50dp'
             on_press: root.unlock_start() if root.start_locked else root.lock_start()
 
@@ -67,7 +67,7 @@
     BoxLayout:
         orientation: 'horizontal'
         size_hint_y: None
-        height: '50dp'
+        height: '30dp'
         spacing: 10
 
         # Pole do wpisania przebiegu końcowego
@@ -84,7 +84,8 @@
 
         # Przycisk blokujący/odblokujący pole do wpisania przebiegu końcowego
         Button:
-            text: "✏️" if root.end_locked else "✅"
+            id: end_button
+            text: "Zmień" if root.end_locked else "Zapisz"
             width: '50dp'
             on_press: root.unlock_end() if root.end_locked else root.lock_end()
 
@@ -126,7 +127,8 @@
 
         # Przycisk blokujący/odblokujący pole do wpisania ilości delegacji
         Button:
-            text: "✏️" if root.deleg_locked else "✅"
+            id: deleg_button
+            text: "Zmień" if root.deleg_locked else "Zapisz"
             width: '50dp'
             on_press: root.unlock_deleg() if root.deleg_locked else root.lock_deleg()
 
@@ -152,5 +154,10 @@
             id: confirm_button
             size_hint_y: None
             text: "Zapisz i wyjdź"
-            height: '40dp'
+            height: '56dp'
             on_press: root.save()
+
+        # Elastyczny margines, który unosi przycisk
+        Widget:
+            size_hint_y: None
+            height: '50dp'
