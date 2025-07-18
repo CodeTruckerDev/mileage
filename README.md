@@ -14,9 +14,15 @@
 
 ### 📸 Zrzut ekranu aplikacji
 
-*Widok główny aplikacji – z wprowadzonymi danymi przykładowymi*
+*Widok główny aplikacji – z wprowadzonymi danymi przykładowymi. Wersja uruchomiona na komputerze*
 
 ![Image](mileage_1.0.png)
+
+
+
+Zrzut wykonany na moim telefonie — żeby było widać, że to nie tylko kod, ale realna aplikacja, którą da się uruchomić
+
+![Image](mileage_mobile.png)
 
 ## 🗂️ Struktura danych
 
