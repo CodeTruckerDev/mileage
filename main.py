@@ -3,6 +3,7 @@ Config.set('graphics', 'width', '360')
 Config.set('graphics', 'height', '800')
 
 import sqlite3
+import os
 from datetime import datetime
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -90,9 +91,26 @@ class MileageLayout(BoxLayout):
         self.update_confirm_button_state()
 
     def set_selected_month(self, month_key):
+        months_pl = {
+            'January': 'Styczeń',
+            'February': 'Luty',
+            'March': 'Marzec',
+            'April': 'Kwiecień',
+            'May': 'Maj',
+            'June': 'Czerwiec',
+            'July': 'Lipiec',
+            'August': 'Sierpień',
+            'September': 'Wrzesień',
+            'October': 'Październik',
+            'November': 'Listopad',
+            'December': 'Grudzień'
+        }
+        
         self.selected_month_key = month_key
         dt = datetime.strptime(month_key, "%Y-%m")
-        self.selected_month_display = dt.strftime("%B %Y")
+        month_en = dt.strftime("%B")
+        month_pl = months_pl.get(month_en, month_en)
+        self.selected_month_display = f"{month_pl} {dt.year}"
 
         data = self.db.get_month_data(month_key)
         if data:
@@ -111,18 +129,25 @@ class MileageLayout(BoxLayout):
 
         confirm_button = self.ids.confirm_button
         if is_current:
-            confirm_button.disabled = False
+            self.set_buttons_enabled(True)
             confirm_button.text = "Zapisz i wyjdź"
         else:
-            confirm_button.disabled = True
+            self.set_buttons_enabled(False)
             confirm_button.text = "Edycja zablokowana"
 
         
     def set_editable_state(self, editable):
-        # Funkcja zmienia stan edytowalności pól w zależności od miesiąca
+        # Funkcja zmienia stan pól w zależności od miesiąca
         self.ids.start_input.disabled = not editable
         self.ids.end_input.disabled = not editable
-        self.ids.lock_button.disabled = not editable
+        self.ids.deleg_input.disabled = not editable
+
+    def set_buttons_enabled(self, enabled: bool):
+        #  Blokuje lub odblokowuje wszystkie przyciski w zależności od wybranego miesiąca
+        self.ids.start_button.disabled = not enabled
+        self.ids.end_button.disabled = not enabled
+        self.ids.deleg_button.disabled = not enabled
+        self.ids.confirm_button.disabled = not enabled
 
     def show_month_selector(self):
         # Pokazuje popup z listą zapisanych miesięcy
@@ -131,7 +156,7 @@ class MileageLayout(BoxLayout):
         layout.bind(minimum_height=layout.setter('height'))
 
         for month in available_months:
-            btn = Button(text=month, size_hint_y=None, height=40)
+            btn = Button(text=month, size_hint_y=None, height=80)
             btn.bind(on_release=lambda btn: self.select_month(btn.text))
             layout.add_widget(btn)
 
@@ -239,9 +264,12 @@ class MileageApp(App):
     def build(self):
         root = FloatLayout()
 
+        # ustal ścieżkę do tła w folderze assets/
+        background_path = os.path.join(os.path.dirname(__file__), 'assets', 'dusk2_cropped.jpg')
+
         # ustawienie tła dla aplikacji. Obraz w tej samej lokacji co main.py
         background = Image(
-            source='dusk2_cropped.jpg',
+            source=background_path,
             allow_stretch=True,
             keep_ratio=False,
             size_hint=(1, 1),
