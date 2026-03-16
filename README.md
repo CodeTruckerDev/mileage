@@ -52,9 +52,17 @@ python main.py
 - Obraz tła: `dusk2_cropped.jpg` ([źródło](https://www.freepik.com/free-ai-image/truck-logistics-operation-dusk_186747654.htm))
 - Ikona aplikacji: `icon.png` ([źródło](https://icons8.com/icon/BCKJ34JwI3Bs/truck) – Truck icon by Icons8.com)
 
-## Licencja
+---
 
-Projekt dostępny na licencji **MIT**. Możesz używać, modyfikować i udostępniać aplikację zgodnie z zasadami tej licencji.
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file.
+
+**Attribution appreciated:** If you use this code, a link back to this repo
+would be awesome (but not required). It helps other developers find the original
+work and supports independent creators like me.
+
+---
 
 ## Pomysły na przyszłość
 
