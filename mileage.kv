@@ -23,9 +23,9 @@
         Label:
             text: root.selected_month_display
             font_size: '16sp'
-            color: (1, 1, 0, 1)  # kolor żółty
+            color: (1, 1, 0, 1)  # kolor zolty
 
-    # Informacja określająca początek trasy
+    # Informacja okreslająca początek trasy
     Label:
         text: "Początek trasy"
         font_size: '16sp'
@@ -46,18 +46,20 @@
             input_type: 'number'
             hint_text: "Przebieg auta przy rozpoczęciu trasy"
             hint_text_color: 1, 1, 1, 1  # kolor biały
-            background_color: (0, 1, 0, 1) if self.focus else (0, 0, 1, 1)  # kolor zielony jako aktywny i niebieski jako nieaktywny
+            foreground_color: 1, 1, 1, 1  # tekst biały - czytelny na zielonym i niebieskim
+            background_color: (0.2, 0.6, 0.3, 1) if self.focus else (0, 0, 1, 1)  # przygaszony zielony aktywny, niebieski nieaktywny
             disabled: root.start_locked
             on_text: root.update_start(self.text)
 
-        # Przycisk blokujący/odblokujący pole do wpisania przebiegu początkowego
+        # Przycisk blokujący/odblokowujący pole przebiegu początkowego
         Button:
             id: start_button
             text: "Zmień" if root.start_locked else "Zapisz"
+            color: (0.2, 0.8, 0.9, 1) if root.start_locked else (1, 1, 1, 1)  # cyjan po blokadzie, biały domyślnie
             width: '50dp'
             on_press: root.unlock_start() if root.start_locked else root.lock_start()
 
-    # Informacja określająca koniec trasy
+    # Informacja okreslająca koniec trasy
     Label:
         text: "Koniec trasy"
         font_size: '16sp'
@@ -77,20 +79,21 @@
             input_filter: 'int'
             input_type: 'number'
             hint_text: "Przebieg auta po zakończeniu trasy"
-            hint_text_color: 1, 1, 1, 1  # kolor biały
-            background_color: (1, 0, 0, 1) if self.focus else (0, 0, 1, 1)  # kolor czerwony jako aktywny i niebieski jako nieaktywny
+            hint_text_color: 1, 1, 1, 1  # kolor bialy
+            foreground_color: 1, 1, 1, 1  # tekst bialy - czytelny na czerwonym i niebieskim
+            background_color: (0.8, 0.2, 0.2, 1) if self.focus else (0, 0, 1, 1)  # przygaszony czerwony aktywny, niebieski nieaktywny
             disabled: root.end_locked
             on_text: root.update_end(self.text)
 
-        # Przycisk blokujący/odblokujący pole do wpisania przebiegu końcowego
+        # Przycisk blokujący/odblokowujący pole przebiegu końcowego
         Button:
             id: end_button
             text: "Zmień" if root.end_locked else "Zapisz"
+            color: (0.2, 0.8, 0.9, 1) if root.end_locked else (1, 1, 1, 1)  # cyjan po blokadzie, bialy domyślnie
             width: '50dp'
             on_press: root.unlock_end() if root.end_locked else root.lock_end()
 
-
-    # Pole wyświetlające ostrzeżenie w przypadku, gdy wartość końcowa jest mniejsza niż początkowa
+    # Pole ostrzezenia, gdy wartość końcowa jest mniejsza niż początkowa
     Label:
         bold: True
         text: root.warning_text
@@ -99,7 +102,7 @@
         size_hint_y: None
         height: '30dp'
 
-    # Informacja określająca ilość delegacji
+    # Informacja okreslająca ilość delegacji
     Label:
         text: "Ilość delegacji"
         font_size: '16sp'
@@ -119,16 +122,17 @@
             input_filter: 'int'
             input_type: 'number'
             hint_text: "Ilość delegacji"
-            hint_text_color: 1, 1, 1, 1  # kolor biały
-            background_color: (1, 0.5, 0, 1) if self.focus else (0, 0, 1, 1)  # kolor pomarańczowy jako aktywny i niebieski jako nieaktywny
-
+            hint_text_color: 1, 1, 1, 1  # kolor bialy
+            foreground_color: 1, 1, 1, 1  # tekst bialy - czytelny na pomarańczowym i niebieskim
+            background_color: (0.85, 0.45, 0.1, 1) if self.focus else (0, 0, 1, 1)  # przygaszony pomarańczowy aktywny, niebieski nieaktywny
             disabled: root.deleg_locked
             on_text: root.update_deleg(self.text)
 
-        # Przycisk blokujący/odblokujący pole do wpisania ilości delegacji
+        # Przycisk blokujący/odblokowujący pole ilości delegacji
         Button:
             id: deleg_button
             text: "Zmień" if root.deleg_locked else "Zapisz"
+            color: (0.2, 0.8, 0.9, 1) if root.deleg_locked else (1, 1, 1, 1)  # cyjan po blokadzie, bialy domyślnie
             width: '50dp'
             on_press: root.unlock_deleg() if root.deleg_locked else root.lock_deleg()
 
@@ -149,7 +153,14 @@
             size_hint_y: None
             font_size: '18sp'
 
-        # Przycisk zapisujący dane do bazy oraz zamykający aplikację po pięciu sekundach
+        # Pole pamietające ostatni zapisany wpis trasy
+        Label:
+            text: root.last_entry_text
+            size_hint_y: None
+            font_size: '16sp'
+            color: (0.6, 1, 0.6, 1)  # delikatna zielen
+
+        # Przycisk zapisujący dane i zamykający aplikację po dwóch sekundach
         Button:
             id: confirm_button
             size_hint_y: None
@@ -157,7 +168,8 @@
             height: '56dp'
             on_press: root.save()
 
-        # Elastyczny margines, który unosi przycisk
+        # Elastyczny margines unoszący przycisk wyżej
         Widget:
             size_hint_y: None
-            height: '50dp'
+            height: '60dp'
+
